@@ -42,18 +42,48 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
-          Text('PUSZES'),
+          BlocBuilder<CounterCubit, CounterState>(
+            builder: (context, state) {
+              if (state.counterValue < 0) {
+                return Text(
+                  "UUUU MINUSIKKK  " + state.counterValue.toString(),
+                  style: TextStyle(fontSize: 20),
+                );
+              } else if (state.counterValue == 0) {
+                return Text(
+                  "MNIEJ NIŻ ZEROOOOO   " + state.counterValue.toString(),
+                  style: TextStyle(fontSize: 20),
+                );
+              } else {
+                return Text(
+                  "UUUU PLUSIKKK  " + state.counterValue.toString(),
+                  style: TextStyle(fontSize: 20),
+                );
+              }
+              ;
+            },
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<CounterCubit>(context).zeroShit();
+                },
+                child: Icon(Icons.exposure_zero),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  BlocProvider.of<CounterCubit>(context).decrement();
+                },
                 tooltip: 'Decrement',
                 child: Icon(Icons.remove),
               ),
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<CounterCubit>(context).increment();
+                },
                 tooltip: 'Increment',
                 child: Icon(Icons.add),
               )
