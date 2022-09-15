@@ -42,12 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
         listener: (context, state) {
           if (state.isIncremented == true) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('KURWA INCREMENT'),
+              content: Text('DODANOO'),
               duration: Duration(seconds: 1),
             ));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('KURWA DECREMENT'),
+              content: Text('ODJĘTOOO'),
               duration: Duration(seconds: 1),
             ));
           }
