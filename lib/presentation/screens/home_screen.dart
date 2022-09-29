@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../logic/cubit/counter_cubit.dart';
+import 'package:test_bloc_app/presentation/screens/second_screen.dart';
 
-class SecondScreen extends StatefulWidget {
+import '../../logic/cubit/counter_cubit.dart';
+
+class HomeScreen extends StatefulWidget {
   Color color;
   String text;
 
-  SecondScreen({required this.color, required this.text, super.key});
+  HomeScreen({required this.color, required this.text, super.key});
 
   @override
-  State<SecondScreen> createState() => _SecondScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _SecondScreenState extends State<SecondScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: widget.color,
         title: Text(widget.text),
       ),
       body: BlocListener<CounterCubit, CounterState>(
@@ -64,12 +65,14 @@ class _SecondScreenState extends State<SecondScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 FloatingActionButton(
+                  heroTag: 1,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).zeroShit();
                   },
                   child: Icon(Icons.exposure_zero),
                 ),
                 FloatingActionButton(
+                  heroTag: 2,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
                   },
@@ -77,6 +80,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   child: Icon(Icons.remove),
                 ),
                 FloatingActionButton(
+                  heroTag: 3,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
@@ -85,9 +89,18 @@ class _SecondScreenState extends State<SecondScreen> {
                 )
               ],
             ),
-            FloatingActionButton(
-                focusColor: widget.color,
-                onPressed: (() => Navigator.of(context).pop())),
+            MaterialButton(
+                color: widget.color,
+                child: Text('Second Page'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/second');
+                }),
+            MaterialButton(
+                color: widget.color,
+                child: Text('Third Page'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/third');
+                })
           ],
         ),
       ),

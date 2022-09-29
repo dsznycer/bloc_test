@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_bloc_app/presentation/second_screen.dart';
-import '../logic/cubit/counter_cubit.dart';
+import '../../logic/cubit/counter_cubit.dart';
 
-class ThirdScreen extends StatefulWidget {
+class SecondScreen extends StatefulWidget {
   Color color;
   String text;
 
-  ThirdScreen({required this.color, required this.text, super.key});
+  SecondScreen({required this.color, required this.text, super.key});
 
   @override
-  State<ThirdScreen> createState() => _ThirdScreenState();
+  State<SecondScreen> createState() => _SecondScreenState();
 }
 
-class _ThirdScreenState extends State<ThirdScreen> {
+class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: widget.color,
         title: Text(widget.text),
       ),
       body: BlocListener<CounterCubit, CounterState>(
@@ -64,12 +64,14 @@ class _ThirdScreenState extends State<ThirdScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 FloatingActionButton(
+                  heroTag: 126,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).zeroShit();
                   },
                   child: Icon(Icons.exposure_zero),
                 ),
                 FloatingActionButton(
+                  heroTag: 125,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
                   },
@@ -77,6 +79,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
                   child: Icon(Icons.remove),
                 ),
                 FloatingActionButton(
+                  heroTag: 124,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
@@ -85,17 +88,10 @@ class _ThirdScreenState extends State<ThirdScreen> {
                 )
               ],
             ),
-            MaterialButton(
-                color: widget.color,
-                child: Text('Next Page'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                            value: BlocProvider.of<CounterCubit>(context),
-                            child: SecondScreen(
-                                color: Colors.grey, text: "SECOND SCREEN"),
-                          )));
-                }),
+            FloatingActionButton(
+                heroTag: 123,
+                focusColor: widget.color,
+                onPressed: (() => Navigator.of(context).pop())),
           ],
         ),
       ),
