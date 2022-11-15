@@ -1,5 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_bloc_app/constants/enums.dart';
+import 'package:test_bloc_app/logic/cubit/internet_cubit.dart';
 import 'package:test_bloc_app/presentation/screens/second_screen.dart';
 
 import '../../logic/cubit/counter_cubit.dart';
@@ -35,73 +39,89 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
           }
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
-            BlocBuilder<CounterCubit, CounterState>(
-              builder: (context, state) {
-                if (state.counterValue < 0) {
-                  return Text(
-                    "UUUU MINUSIKKK  " + state.counterValue.toString(),
-                    style: TextStyle(fontSize: 20),
-                  );
-                } else if (state.counterValue == 0) {
-                  return Text(
-                    "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
-                    style: TextStyle(fontSize: 20),
-                  );
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              BlocBuilder<InternetCubit, InternetState>(
+                  builder: (context, state) {
+                if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.mobile) {
+                  return Text("Connected to mobile");
+                } else if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.wifi) {
+                  return Text("Connected to WIFI");
+                } else if (state is InternetDisconnected) {
+                  return const Text("Disconnected");
                 } else {
-                  return Text(
-                    "Jesteś na plus!   " + state.counterValue.toString(),
-                    style: TextStyle(fontSize: 20),
-                  );
+                  return CircularProgressIndicator();
                 }
-                ;
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                FloatingActionButton(
-                  heroTag: 1,
+              }),
+              Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
+              BlocBuilder<CounterCubit, CounterState>(
+                builder: (context, state) {
+                  if (state.counterValue < 0) {
+                    return Text(
+                      "UUUU MINUSIKKK  " + state.counterValue.toString(),
+                      style: TextStyle(fontSize: 20),
+                    );
+                  } else if (state.counterValue == 0) {
+                    return Text(
+                      "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
+                      style: TextStyle(fontSize: 20),
+                    );
+                  } else {
+                    return Text(
+                      "Jesteś na plus!   " + state.counterValue.toString(),
+                      style: TextStyle(fontSize: 20),
+                    );
+                  }
+                },
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   mainAxisSize: MainAxisSize.max,
+              //   children: [
+              //     FloatingActionButton(
+              //       heroTag: 1,
+              //       onPressed: () {
+              //         BlocProvider.of<CounterCubit>(context).zeroShit();
+              //       },
+              //       child: Icon(Icons.exposure_zero),
+              //     ),
+              //     FloatingActionButton(
+              //       heroTag: 2,
+              //       onPressed: () {
+              //         BlocProvider.of<CounterCubit>(context).decrement();
+              //       },
+              //       tooltip: 'Decrement',
+              //       child: Icon(Icons.remove),
+              //     ),
+              //     FloatingActionButton(
+              //       heroTag: 3,
+              //       onPressed: () {
+              //         BlocProvider.of<CounterCubit>(context).increment();
+              //       },
+              //       tooltip: 'Increment',
+              //       child: Icon(Icons.add),
+              //     )
+              //   ],
+              // ),
+              MaterialButton(
+                  color: widget.color,
+                  child: Text('Second Page'),
                   onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).zeroShit();
-                  },
-                  child: Icon(Icons.exposure_zero),
-                ),
-                FloatingActionButton(
-                  heroTag: 2,
+                    Navigator.of(context).pushNamed('/second');
+                  }),
+              MaterialButton(
+                  color: widget.color,
+                  child: Text('Third Page'),
                   onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).decrement();
-                  },
-                  tooltip: 'Decrement',
-                  child: Icon(Icons.remove),
-                ),
-                FloatingActionButton(
-                  heroTag: 3,
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                  tooltip: 'Increment',
-                  child: Icon(Icons.add),
-                )
-              ],
-            ),
-            MaterialButton(
-                color: widget.color,
-                child: Text('Second Page'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/second');
-                }),
-            MaterialButton(
-                color: widget.color,
-                child: Text('Third Page'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/third');
-                })
-          ],
+                    Navigator.of(context).pushNamed('/third');
+                  })
+            ],
+          ),
         ),
       ),
     );
