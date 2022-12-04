@@ -79,35 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   mainAxisSize: MainAxisSize.max,
-              //   children: [
-              //     FloatingActionButton(
-              //       heroTag: 1,
-              //       onPressed: () {
-              //         BlocProvider.of<CounterCubit>(context).zeroShit();
-              //       },
-              //       child: Icon(Icons.exposure_zero),
-              //     ),
-              //     FloatingActionButton(
-              //       heroTag: 2,
-              //       onPressed: () {
-              //         BlocProvider.of<CounterCubit>(context).decrement();
-              //       },
-              //       tooltip: 'Decrement',
-              //       child: Icon(Icons.remove),
-              //     ),
-              //     FloatingActionButton(
-              //       heroTag: 3,
-              //       onPressed: () {
-              //         BlocProvider.of<CounterCubit>(context).increment();
-              //       },
-              //       tooltip: 'Increment',
-              //       child: Icon(Icons.add),
-              //     )
-              //   ],
-              // ),
               MaterialButton(
                   color: widget.color,
                   child: Text('Second Page'),
