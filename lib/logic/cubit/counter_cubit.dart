@@ -21,11 +21,13 @@ class CounterCubit extends Cubit<CounterState> {
     return internetStreamSubscription =
         internetCubit.stream.listen((InternetState) {
       if (InternetState is InternetConnected &&
-          ConnectionType == ConnectionType.wifi) {
+          InternetState.connectionType == ConnectionType.wifi) {
         increment();
       } else if (InternetState is InternetConnected &&
-          ConnectionType == ConnectionType.mobile) {
+          InternetState.connectionType == ConnectionType.mobile) {
         increment();
+      } else if (InternetState is InternetDisconnected) {
+        decrement();
       }
     });
   }
