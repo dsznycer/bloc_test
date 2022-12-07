@@ -21,77 +21,96 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.text),
-      ),
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
-          if (state.isIncremented == true) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('DODANOO'),
-              duration: Duration(seconds: 1),
-            ));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('ODJĘTOOO'),
-              duration: Duration(seconds: 1),
-            ));
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              BlocBuilder<InternetCubit, InternetState>(
-                  builder: (context, state) {
-                if (state is InternetConnected &&
-                    state.connectionType == ConnectionType.mobile) {
-                  return Text("Connected to mobile");
-                } else if (state is InternetConnected &&
-                    state.connectionType == ConnectionType.wifi) {
-                  return Text("Connected to WIFI");
-                } else if (state is InternetDisconnected) {
-                  return const Text("Disconnected");
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
-              Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
-              BlocBuilder<CounterCubit, CounterState>(
-                builder: (context, state) {
-                  if (state.counterValue < 0) {
+    return BlocListener<InternetCubit, InternetState>(
+      listener: (context, state) {
+        if (state is InternetConnected) {
+          BlocProvider.of<CounterCubit>(context).increment();
+        } else if (state is InternetDisconnected) {
+          BlocProvider.of<CounterCubit>(context).decrement();
+          // BlocProvider.of<CounterCubit>(context).decrement();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.text),
+        ),
+        body: BlocListener<CounterCubit, CounterState>(
+          listener: (context, state) {
+            if (state.isIncremented == true) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('DODANOO'),
+                duration: Duration(seconds: 1),
+              ));
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('ODJĘTOOO'),
+                duration: Duration(seconds: 1),
+              ));
+            }
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                BlocBuilder<InternetCubit, InternetState>(
+                    builder: (context, state) {
+                  if (state is InternetConnected &&
+                      state.connectionType == ConnectionType.mobile) {
                     return Text(
-                      "UUUU MINUSIKKK  " + state.counterValue.toString(),
-                      style: TextStyle(fontSize: 20),
+                      "Connected to mobile",
+                      style: Theme.of(context).textTheme.headline3,
                     );
-                  } else if (state.counterValue == 0) {
+                  } else if (state is InternetConnected &&
+                      state.connectionType == ConnectionType.wifi) {
                     return Text(
-                      "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
-                      style: TextStyle(fontSize: 20),
+                      "Connected to WIFI",
+                      style: Theme.of(context).textTheme.headline3,
+                    );
+                  } else if (state is InternetDisconnected) {
+                    return Text(
+                      "Disconnected",
+                      style: Theme.of(context).textTheme.headline3,
                     );
                   } else {
-                    return Text(
-                      "Jesteś na plus!   " + state.counterValue.toString(),
-                      style: TextStyle(fontSize: 20),
-                    );
+                    return CircularProgressIndicator();
                   }
-                },
-              ),
-              MaterialButton(
-                  color: widget.color,
-                  child: Text('Second Page'),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/second');
-                  }),
-              MaterialButton(
-                  color: widget.color,
-                  child: Text('Third Page'),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/third');
-                  })
-            ],
+                }),
+                Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
+                BlocBuilder<CounterCubit, CounterState>(
+                  builder: (context, state) {
+                    if (state.counterValue < 0) {
+                      return Text(
+                        "UUUU MINUSIKKK  " + state.counterValue.toString(),
+                        style: TextStyle(fontSize: 20),
+                      );
+                    } else if (state.counterValue == 0) {
+                      return Text(
+                        "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
+                        style: TextStyle(fontSize: 20),
+                      );
+                    } else {
+                      return Text(
+                        "Jesteś na plus!   " + state.counterValue.toString(),
+                        style: TextStyle(fontSize: 20),
+                      );
+                    }
+                  },
+                ),
+                MaterialButton(
+                    color: widget.color,
+                    child: Text('Second Page'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/second');
+                    }),
+                MaterialButton(
+                    color: widget.color,
+                    child: Text('Third Page'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/third');
+                    })
+              ],
+            ),
           ),
         ),
       ),
