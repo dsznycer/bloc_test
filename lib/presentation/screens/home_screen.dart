@@ -37,11 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
         body: BlocListener<CounterCubit, CounterState>(
           listener: (context, state) {
             if (state.isIncremented == true) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text('DODANOO'),
-                duration: Duration(seconds: 1),
-              ));
-            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text('DODANOO'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            } else if (state.isIncremented == false) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('ODJĘTOOO'),
                 duration: Duration(seconds: 1),

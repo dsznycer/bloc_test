@@ -6,17 +6,19 @@ import 'package:test_bloc_app/logic/cubit/internet_cubit.dart';
 import 'package:test_bloc_app/presentation/router/app_router.dart';
 
 void main() {
-  runApp(MyApp(
-    appRouter: AppRouter(),
-    connectivity: Connectivity(),
+  runApp(RepositoryProvider<AppRouter>(
+    create: (context) => AppRouter(),
+    child: MyApp(
+      connectivity: Connectivity(),
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  final AppRouter appRouter;
+  // final AppRouter appRouter;
   final Connectivity connectivity;
 
-  MyApp({required this.appRouter, required this.connectivity});
+  MyApp({required this.connectivity});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.blueGrey,
         ),
-        onGenerateRoute: appRouter.onGenerateRoute,
+        onGenerateRoute:
+            RepositoryProvider.of<AppRouter>(context).onGenerateRoute,
       ),
     );
   }

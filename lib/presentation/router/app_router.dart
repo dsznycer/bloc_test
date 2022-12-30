@@ -20,7 +20,7 @@ class AppRouter {
       case '/third':
         return MaterialPageRoute(
           builder: (context) =>
-              SecondScreen(color: Colors.green, text: 'Third Screen'),
+              SecondScreen(color: Colors.blue, text: 'Third Screen'),
         );
         break;
       default:
