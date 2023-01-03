@@ -52,14 +52,14 @@ class _SecondScreenState extends State<SecondScreen> {
               FloatingActionButton(
                 heroTag: 126,
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).zeroShit();
+                  context.read<CounterCubit>().zeroShit();
                 },
                 child: Icon(Icons.exposure_zero),
               ),
               FloatingActionButton(
                 heroTag: 125,
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).decrement();
+                  context.read<CounterCubit>().decrement();
                 },
                 tooltip: 'Decrement',
                 child: Icon(Icons.remove),
@@ -67,7 +67,7 @@ class _SecondScreenState extends State<SecondScreen> {
               FloatingActionButton(
                 heroTag: 124,
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).increment();
+                  context.read<CounterCubit>().increment();
                 },
                 tooltip: 'Increment',
                 child: Icon(Icons.add),
