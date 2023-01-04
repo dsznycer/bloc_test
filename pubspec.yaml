@@ -16,11 +16,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.1
   connectivity_plus: ^3.0.2
+  equatable: ^2.0.5
+  freezed: ^2.3.2
 
 dev_dependencies:
   flutter_test:

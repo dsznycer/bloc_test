@@ -72,13 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   return CircularProgressIndicator();
                 }
               }),
-              Builder(
-                builder: (context) {
-                  final counterValue = context
-                      .select((CounterCubit cubit) => cubit.state.counterValue);
-                  return Text(counterValue.toString());
-                },
-              ),
               Builder(builder: (context) {
                 final state = context.watch<InternetCubit>().state;
                 final counterState = context.watch<CounterCubit>().state;
