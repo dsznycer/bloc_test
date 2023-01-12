@@ -1,9 +1,10 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_bloc_app/constants/enums.dart';
 import 'package:test_bloc_app/logic/cubit/internet_cubit.dart';
+import 'package:test_bloc_app/logic/cubit/settings_cubit.dart';
+import 'package:test_bloc_app/logic/cubit/testu_cubit.dart';
 import 'package:test_bloc_app/presentation/screens/second_screen.dart';
 
 import '../../logic/cubit/counter_cubit.dart';
@@ -23,22 +24,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.text),
-      ),
+          title: Text(context.watch<TestuCubit>().state.text),
+          backgroundColor: Colors.amber),
       body: BlocListener<CounterCubit, CounterState>(
         listener: (context, state) {
           if (state.isIncremented == true) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red,
-                content: Text('DODANOO'),
-                duration: Duration(seconds: 1),
+                content: const Text('DODANOO'),
+                duration: const Duration(seconds: 1),
               ),
             );
           } else if (state.isIncremented == false) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('ODJĘTOOO'),
-              duration: Duration(seconds: 1),
+              content: const Text('ODJĘTOOO'),
+              duration: const Duration(seconds: 1),
             ));
           }
         },
@@ -47,6 +48,27 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, state) {
+                if (state is SettingsUnique) {
+                  return Container(
+                    height: 100,
+                    width: 100,
+                    color: state.color,
+                    child: Text(
+                      'Elo',
+                      style: TextStyle(fontSize: state.size.toDouble()),
+                    ),
+                  );
+                } else {
+                  return Container(
+                    height: 100,
+                    width: 100,
+                    color: Colors.amber,
+                    child: Text('Elo'),
+                  );
+                }
+              }),
               BlocBuilder<InternetCubit, InternetState>(
                   builder: (context, state) {
                 if (state is InternetConnected &&
@@ -158,6 +180,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text('Third Page'),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/third');
+                  }),
+              MaterialButton(
+                  color: Colors.amber,
+                  child: Text('Change to Blue'),
+                  onPressed: () {
+                    context.read<SettingsCubit>().toBlue();
+                  }),
+              MaterialButton(
+                  color: Colors.amber,
+                  child: Text('Change to Pink'),
+                  onPressed: () {
+                    context.read<SettingsCubit>().toPink();
+                  }),
+              MaterialButton(
+                  color: Colors.amber,
+                  child: Text('Change to BIG'),
+                  onPressed: () {
+                    context.read<TestuCubit>().changeBig();
                   })
             ],
           ),
