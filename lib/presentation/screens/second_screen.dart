@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_bloc_app/logic/cubit/settings_cubit.dart';
+import 'package:test_bloc_app/logic/cubit/testu_cubit.dart';
 import '../../logic/cubit/counter_cubit.dart';
 
 class SecondScreen extends StatefulWidget {
@@ -18,7 +20,7 @@ class _SecondScreenState extends State<SecondScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.color,
-        title: Text(widget.text),
+        title: Text(context.watch<TestuCubit>().state.text),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -45,6 +47,26 @@ class _SecondScreenState extends State<SecondScreen> {
               ;
             },
           ),
+          BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
+            if (state is SettingsUnique) {
+              return Container(
+                height: 100,
+                width: 100,
+                color: state.color,
+                child: Text(
+                  'Elo',
+                  style: TextStyle(fontSize: state.size.toDouble()),
+                ),
+              );
+            } else {
+              return Container(
+                height: 100,
+                width: 100,
+                color: Colors.amber,
+                child: Text('Elo'),
+              );
+            }
+          }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
@@ -78,6 +100,10 @@ class _SecondScreenState extends State<SecondScreen> {
               heroTag: 123,
               focusColor: widget.color,
               onPressed: (() => Navigator.of(context).pop())),
+          MaterialButton(
+              color: Colors.pink,
+              child: Text('To small '),
+              onPressed: () => context.read<TestuCubit>().changeSmall()),
         ],
       ),
     );
