@@ -1,45 +1,42 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_bloc_app/constants/enums.dart';
 import 'package:test_bloc_app/logic/cubit/internet_cubit.dart';
 import 'package:test_bloc_app/logic/cubit/settings_cubit.dart';
 import 'package:test_bloc_app/logic/cubit/testu_cubit.dart';
-import 'package:test_bloc_app/presentation/screens/second_screen.dart';
 
 import '../../logic/cubit/counter_cubit.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   Color color;
   String text;
 
   HomeScreen({required this.color, required this.text, super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
+    final value =
+        context.select((CounterCubit bloc) => bloc.state.counterValue);
+
     return Scaffold(
       appBar: AppBar(
-          title: Text(context.watch<TestuCubit>().state.text),
+          title:
+              Text((context.watch<TestuCubit>().state.text) + value.toString()),
           backgroundColor: Colors.amber),
       body: BlocListener<CounterCubit, CounterState>(
         listener: (context, state) {
           if (state.isIncremented == true) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 backgroundColor: Colors.red,
-                content: const Text('DODANOO'),
-                duration: const Duration(seconds: 1),
+                content: Text('DODANOO'),
+                duration: Duration(seconds: 1),
               ),
             );
           } else if (state.isIncremented == false) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: const Text('ODJĘTOOO'),
-              duration: const Duration(seconds: 1),
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('ODJĘTOOO'),
+              duration: Duration(seconds: 1),
             ));
           }
         },
@@ -48,27 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BlocBuilder<SettingsCubit, SettingsState>(
-                  builder: (context, state) {
-                if (state is SettingsUnique) {
-                  return Container(
-                    height: 100,
-                    width: 100,
-                    color: state.color,
-                    child: Text(
-                      'Elo',
-                      style: TextStyle(fontSize: state.size.toDouble()),
-                    ),
-                  );
-                } else {
-                  return Container(
-                    height: 100,
-                    width: 100,
-                    color: Colors.amber,
-                    child: Text('Elo'),
-                  );
-                }
-              }),
               BlocBuilder<InternetCubit, InternetState>(
                   builder: (context, state) {
                 if (state is InternetConnected &&
@@ -91,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.headline3,
                   );
                 } else {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               }),
               Builder(builder: (context) {
@@ -102,40 +78,40 @@ class _HomeScreenState extends State<HomeScreen> {
                     state.connectionType == ConnectionType.mobile) {
                   return Text(
                     textAlign: TextAlign.center,
-                    'TYLE RAZY PUSZNIĘTE: ${counterState.counterValue} a state is Internet Connected to mobile',
+                    'This was pushed: ${counterState.counterValue} a state is Internet Connected to mobile',
                   );
                 } else if (state is InternetConnected &&
                     state.connectionType == ConnectionType.wifi) {
                   return Text(
                     softWrap: true,
                     textAlign: TextAlign.center,
-                    'TYLE RAZY PUSZNIĘTE: ${counterState.counterValue} a state is Internet Connected to wifi         ',
+                    'This was pushed: ${counterState.counterValue} a state is Internet Connected to wifi         ',
                   );
                 } else if (state is InternetDisconnected) {
                   Text(
                     textAlign: TextAlign.center,
-                    'TYLE RAZY PUSZNIĘTE: ${counterState.counterValue} a state is kurwa disconnected}',
+                    'This was pushed: ${counterState.counterValue} a state is kurwa disconnected}',
                   );
                 }
 
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }),
               BlocBuilder<CounterCubit, CounterState>(
                 builder: (context, state) {
                   if (state.counterValue < 0) {
                     return Text(
-                      "UUUU MINUSIKKK  " + state.counterValue.toString(),
-                      style: TextStyle(fontSize: 20),
+                      "You are under  " + state.counterValue.toString(),
+                      style: const TextStyle(fontSize: 20),
                     );
                   } else if (state.counterValue == 0) {
                     return Text(
-                      "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
-                      style: TextStyle(fontSize: 20),
+                      "Less than zero  " + state.counterValue.toString(),
+                      style: const TextStyle(fontSize: 20),
                     );
                   } else {
                     return Text(
-                      "Jesteś na plus!   " + state.counterValue.toString(),
-                      style: TextStyle(fontSize: 20),
+                      "On the plus side!  " + state.counterValue.toString(),
+                      style: const TextStyle(fontSize: 20),
                     );
                   }
                 },
@@ -149,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       context.read<CounterCubit>().zeroShit();
                     },
-                    child: Icon(Icons.exposure_zero),
+                    child: const Icon(Icons.exposure_zero),
                   ),
                   FloatingActionButton(
                     heroTag: 125,
@@ -157,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       context.read<CounterCubit>().decrement();
                     },
                     tooltip: 'Decrement',
-                    child: Icon(Icons.remove),
+                    child: const Icon(Icons.remove),
                   ),
                   FloatingActionButton(
                     heroTag: 124,
@@ -165,37 +141,49 @@ class _HomeScreenState extends State<HomeScreen> {
                       context.read<CounterCubit>().increment();
                     },
                     tooltip: 'Increment',
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                   )
                 ],
               ),
               MaterialButton(
-                  color: widget.color,
-                  child: Text('Second Page'),
+                  color: color,
+                  child: const Text('Second Page'),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/second');
                   }),
               MaterialButton(
-                  color: widget.color,
-                  child: Text('Third Page'),
+                  color: color,
+                  child: const Text('Third Page'),
                   onPressed: () {
                     Navigator.of(context).pushNamed('/third');
                   }),
               MaterialButton(
                   color: Colors.amber,
-                  child: Text('Change to Blue'),
+                  child: const Text('Change to Blue'),
                   onPressed: () {
                     context.read<SettingsCubit>().toBlue();
                   }),
+              BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, state) {
+                if (state is SettingsUnique) {
+                  return MaterialButton(
+                      color: state.color,
+                      child: const Text('Change to Pink'),
+                      onPressed: () {
+                        context.read<SettingsCubit>().toPink();
+                      });
+                } else {
+                  return MaterialButton(
+                      color: Colors.amber,
+                      child: const Text('Change to Pink'),
+                      onPressed: () {
+                        context.read<SettingsCubit>().toPink();
+                      });
+                }
+              }),
               MaterialButton(
                   color: Colors.amber,
-                  child: Text('Change to Pink'),
-                  onPressed: () {
-                    context.read<SettingsCubit>().toPink();
-                  }),
-              MaterialButton(
-                  color: Colors.amber,
-                  child: Text('Change to BIG'),
+                  child: const Text('Change to BIG'),
                   onPressed: () {
                     context.read<TestuCubit>().changeBig();
                   })

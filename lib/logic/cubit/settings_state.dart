@@ -11,24 +11,8 @@ class SettingsInitial extends SettingsState {
 
   SettingsInitial(this.color, this.size);
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'color': color.value,
-      'size': size,
-    };
-  }
-
-  factory SettingsInitial.fromMap(Map<String, dynamic> map) {
-    return SettingsInitial(
-      Color(map['color'] as int),
-      map['size'] as int,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory SettingsInitial.fromJson(String source) =>
-      SettingsInitial.fromMap(json.decode(source) as Map<String, dynamic>);
+  @override
+  String toString() => 'SettingsInitial(color: $color, size: $size)';
 }
 
 class SettingsUnique extends SettingsState {
@@ -37,22 +21,6 @@ class SettingsUnique extends SettingsState {
 
   SettingsUnique(this.color, this.size);
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'color': color.value,
-      'size': size,
-    };
-  }
-
-  factory SettingsUnique.fromMap(Map<String, dynamic> map) {
-    return SettingsUnique(
-      Color(map['color'] as int),
-      map['size'] as int,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory SettingsUnique.fromJson(String source) =>
-      SettingsUnique.fromMap(json.decode(source) as Map<String, dynamic>);
+  @override
+  String toString() => 'SettingsUnique(color: $color, size: $size)';
 }

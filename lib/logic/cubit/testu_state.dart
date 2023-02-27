@@ -23,4 +23,7 @@ class TestuState {
 
   factory TestuState.fromJson(String source) =>
       TestuState.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'TestuState(text: $text)';
 }

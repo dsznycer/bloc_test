@@ -24,23 +24,23 @@ class _ThirdScreenState extends State<ThirdScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
+          const Text('This was pushed this many times:'),
           BlocBuilder<CounterCubit, CounterState>(
             builder: (context, state) {
               if (state.counterValue < 0) {
                 return Text(
-                  "UUUU MINUSIKKK  " + state.counterValue.toString(),
-                  style: TextStyle(fontSize: 20),
+                  "You are under  " + state.counterValue.toString(),
+                  style: const TextStyle(fontSize: 20),
                 );
               } else if (state.counterValue == 0) {
                 return Text(
-                  "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
-                  style: TextStyle(fontSize: 20),
+                  "Zero  " + state.counterValue.toString(),
+                  style: const TextStyle(fontSize: 20),
                 );
               } else {
                 return Text(
                   "Jesteś na plus!   " + state.counterValue.toString(),
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 );
               }
               ;
@@ -54,27 +54,27 @@ class _ThirdScreenState extends State<ThirdScreen> {
                 onPressed: () {
                   context.read<CounterCubit>().zeroShit();
                 },
-                child: Icon(Icons.exposure_zero),
+                child: const Icon(Icons.exposure_zero),
               ),
               FloatingActionButton(
                 onPressed: () {
                   context.read<CounterCubit>().decrement();
                 },
                 tooltip: 'Decrement',
-                child: Icon(Icons.remove),
+                child: const Icon(Icons.remove),
               ),
               FloatingActionButton(
                 onPressed: () {
                   context.read<CounterCubit>().increment();
                 },
                 tooltip: 'Increment',
-                child: Icon(Icons.add),
+                child: const Icon(Icons.add),
               )
             ],
           ),
           MaterialButton(
               color: widget.color,
-              child: Text('Back'),
+              child: const Text('Back'),
               onPressed: () {
                 Navigator.of(context).pop();
               }),

@@ -25,23 +25,23 @@ class _SecondScreenState extends State<SecondScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text('TYLE RAZY TO BYŁO PUSZNIĘTE:'),
+          const Text('This was pushed:'),
           BlocBuilder<CounterCubit, CounterState>(
             builder: (context, state) {
               if (state.counterValue < 0) {
                 return Text(
-                  "UUUU MINUSIKKK  " + state.counterValue.toString(),
-                  style: TextStyle(fontSize: 20),
+                  "You are under " + state.counterValue.toString(),
+                  style: const TextStyle(fontSize: 20),
                 );
               } else if (state.counterValue == 0) {
                 return Text(
-                  "MNIEJ NIŻ ZEROOO   " + state.counterValue.toString(),
-                  style: TextStyle(fontSize: 20),
+                  "Equal zero  " + state.counterValue.toString(),
+                  style: const TextStyle(fontSize: 20),
                 );
               } else {
                 return Text(
-                  "Jesteś na plus!   " + state.counterValue.toString(),
-                  style: TextStyle(fontSize: 20),
+                  "You are on plus   " + state.counterValue.toString(),
+                  style: const TextStyle(fontSize: 20),
                 );
               }
               ;
@@ -63,7 +63,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 height: 100,
                 width: 100,
                 color: Colors.amber,
-                child: Text('Elo'),
+                child: const Text('Elo'),
               );
             }
           }),
@@ -76,7 +76,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 onPressed: () {
                   context.read<CounterCubit>().zeroShit();
                 },
-                child: Icon(Icons.exposure_zero),
+                child: const Icon(Icons.exposure_zero),
               ),
               FloatingActionButton(
                 heroTag: 125,
@@ -84,7 +84,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   context.read<CounterCubit>().decrement();
                 },
                 tooltip: 'Decrement',
-                child: Icon(Icons.remove),
+                child: const Icon(Icons.remove),
               ),
               FloatingActionButton(
                 heroTag: 124,
@@ -92,7 +92,7 @@ class _SecondScreenState extends State<SecondScreen> {
                   context.read<CounterCubit>().increment();
                 },
                 tooltip: 'Increment',
-                child: Icon(Icons.add),
+                child: const Icon(Icons.add),
               )
             ],
           ),
@@ -102,7 +102,7 @@ class _SecondScreenState extends State<SecondScreen> {
               onPressed: (() => Navigator.of(context).pop())),
           MaterialButton(
               color: Colors.pink,
-              child: Text('To small '),
+              child: const Text('To small '),
               onPressed: () => context.read<TestuCubit>().changeSmall()),
         ],
       ),
