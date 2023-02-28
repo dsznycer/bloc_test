@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_bloc_app/logic/cubit/counter_cubit.dart';
 import 'package:test_bloc_app/presentation/screens/home_screen.dart';
 import 'package:test_bloc_app/presentation/screens/second_screen.dart';
+import 'package:test_bloc_app/presentation/screens/third_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -20,7 +21,7 @@ class AppRouter {
       case '/third':
         return MaterialPageRoute(
           builder: (context) =>
-              SecondScreen(color: Colors.blue, text: 'Third Screen'),
+              ThirdScreen(color: Colors.blue, text: 'Third Screen'),
         );
         break;
       default:

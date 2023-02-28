@@ -3,23 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_bloc_app/presentation/screens/second_screen.dart';
 import '../../logic/cubit/counter_cubit.dart';
 
-class ThirdScreen extends StatefulWidget {
+class ThirdScreen extends StatelessWidget {
   Color color;
   String text;
 
   ThirdScreen({required this.color, required this.text, super.key});
 
   @override
-  State<ThirdScreen> createState() => _ThirdScreenState();
-}
-
-class _ThirdScreenState extends State<ThirdScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: widget.color,
-        title: Text(widget.text),
+        backgroundColor: color,
+        title: Text(text),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -29,7 +24,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
             builder: (context, state) {
               if (state.counterValue < 0) {
                 return Text(
-                  "You are under  " + state.counterValue.toString(),
+                  "You are under " + state.counterValue.toString(),
                   style: const TextStyle(fontSize: 20),
                 );
               } else if (state.counterValue == 0) {
@@ -39,7 +34,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
                 );
               } else {
                 return Text(
-                  "Jesteś na plus!   " + state.counterValue.toString(),
+                  "You are on plus " + state.counterValue.toString(),
                   style: const TextStyle(fontSize: 20),
                 );
               }
@@ -73,7 +68,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
             ],
           ),
           MaterialButton(
-              color: widget.color,
+              color: color,
               child: const Text('Back'),
               onPressed: () {
                 Navigator.of(context).pop();

@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   } else if (state.counterValue == 0) {
                     return Text(
-                      "Less than zero  " + state.counterValue.toString(),
+                      "There is nothing " + state.counterValue.toString(),
                       style: const TextStyle(fontSize: 20),
                     );
                   } else {

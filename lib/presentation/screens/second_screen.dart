@@ -4,22 +4,17 @@ import 'package:test_bloc_app/logic/cubit/settings_cubit.dart';
 import 'package:test_bloc_app/logic/cubit/testu_cubit.dart';
 import '../../logic/cubit/counter_cubit.dart';
 
-class SecondScreen extends StatefulWidget {
+class SecondScreen extends StatelessWidget {
   Color color;
   String text;
 
   SecondScreen({required this.color, required this.text, super.key});
 
   @override
-  State<SecondScreen> createState() => _SecondScreenState();
-}
-
-class _SecondScreenState extends State<SecondScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: widget.color,
+        backgroundColor: color,
         title: Text(context.watch<TestuCubit>().state.text),
       ),
       body: Column(
@@ -35,12 +30,12 @@ class _SecondScreenState extends State<SecondScreen> {
                 );
               } else if (state.counterValue == 0) {
                 return Text(
-                  "Equal zero  " + state.counterValue.toString(),
+                  "Equal zero " + state.counterValue.toString(),
                   style: const TextStyle(fontSize: 20),
                 );
               } else {
                 return Text(
-                  "You are on plus   " + state.counterValue.toString(),
+                  "You are on plus " + state.counterValue.toString(),
                   style: const TextStyle(fontSize: 20),
                 );
               }
@@ -53,9 +48,11 @@ class _SecondScreenState extends State<SecondScreen> {
                 height: 100,
                 width: 100,
                 color: state.color,
-                child: Text(
-                  'Elo',
-                  style: TextStyle(fontSize: state.size.toDouble()),
+                child: const Text(
+                  'This box show state color',
+                  maxLines: 3,
+                  style:
+                      TextStyle(fontSize: 14, overflow: TextOverflow.ellipsis),
                 ),
               );
             } else {
@@ -98,7 +95,8 @@ class _SecondScreenState extends State<SecondScreen> {
           ),
           FloatingActionButton(
               heroTag: 123,
-              focusColor: widget.color,
+              focusColor: color,
+              child: Icon(Icons.arrow_back),
               onPressed: (() => Navigator.of(context).pop())),
           MaterialButton(
               color: Colors.pink,
